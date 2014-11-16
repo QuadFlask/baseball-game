@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.flask.baseball.domain.model.Numbers;
 
-public class ExceptSetReducer implements SetReducer<Numbers> {
+public class ExcludeSetReducer implements SetReducer<Numbers> {
 	@Override
 	public Set<Numbers> reduce(Set<Numbers> set, Numbers numbers) {
 		set.remove(numbers);

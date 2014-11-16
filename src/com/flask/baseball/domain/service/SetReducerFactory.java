@@ -2,7 +2,7 @@ package com.flask.baseball.domain.service;
 
 import com.flask.baseball.domain.model.CheckResult;
 import com.flask.baseball.domain.model.Numbers;
-import com.flask.baseball.domain.service.setreducer.ExceptSetReducer;
+import com.flask.baseball.domain.service.setreducer.ExcludeSetReducer;
 import com.flask.baseball.domain.service.setreducer.OneBallSetReducer;
 import com.flask.baseball.domain.service.setreducer.OneStrikeOneBallSetReducer;
 import com.flask.baseball.domain.service.setreducer.OneStrikeSetReducer;
@@ -13,7 +13,7 @@ import com.flask.baseball.domain.service.setreducer.TwoBallSetReducer;
 import com.flask.baseball.domain.service.setreducer.TwoStrikeSetReducer;
 
 public class SetReducerFactory {
-	private static ExceptSetReducer exceptSetReducer = new ExceptSetReducer();
+	private static ExcludeSetReducer exceptSetReducer = new ExcludeSetReducer();
 	private static OneBallSetReducer oneBallSetReducer = new OneBallSetReducer();
 	private static TwoBallSetReducer twoBallSetReducer = new TwoBallSetReducer();
 	private static ThreeBallSetReducer threeBallSetReducer = new ThreeBallSetReducer();
