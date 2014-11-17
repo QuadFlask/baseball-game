@@ -8,15 +8,17 @@ import com.flask.baseball.domain.service.Ai;
 import com.flask.baseball.domain.service.Checker;
 import com.flask.baseball.domain.service.NumbersFactory;
 
-public class AiMain {
-	public static void main(String[] args) {
-		Ai ai = new Ai();
-		Checker checker = new Checker();
-		Scanner scanner = new Scanner(System.in);
-		ai.setAiNumbers(NumbersFactory.createRandom());
+public class BaseballGameMain {
+	private Ai ai;
+	private Checker checker;
+	private Numbers userNumbers;
 
+	public void start() {
+		initGame();
+
+		Scanner scanner = new Scanner(System.in);
 		System.out.println("input your number: ");
-		Numbers userNumbers = new Numbers(scanner.next());
+		userNumbers = new Numbers(scanner.next());
 
 		boolean isUserWin = false;
 		while (true) {
@@ -45,5 +47,15 @@ public class AiMain {
 			}
 			ai.guessResultIn(aiGuessNumbers, checkResult);
 		}
+	}
+
+	private void initGame() {
+		ai = new Ai();
+		checker = new Checker();
+		ai.setAiNumbers(NumbersFactory.createRandom());
+	}
+
+	public static void main(String[] args) {
+		new BaseballGameMain().start();
 	}
 }
