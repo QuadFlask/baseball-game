@@ -4,6 +4,7 @@ baseball-game-ai
 Simple guessing 3 number game
 
 Ai:
+
 | try | win              |
 |-----|------------------|
 | 1   | 1427(0.001427)   |
