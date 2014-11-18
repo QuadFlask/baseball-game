@@ -24,7 +24,7 @@ public class AiTest {
 
 	@Test
 	public void randomTest() {
-		int tryCount = 10000;
+		int tryCount = 1000000;
 		int sum = 0;
 		int max = 0;
 		int min = Integer.MAX_VALUE;
@@ -38,6 +38,10 @@ public class AiTest {
 			result.add(test);
 		}
 
+		printStatistic(tryCount, sum, max, min, result);
+	}
+
+	private void printStatistic(int tryCount, int sum, int max, int min, List<Integer> result) {
 		Collections.sort(result);
 		System.out.println("average: " + sum / tryCount);
 		System.out.println("min: " + min + ",  max: " + max);
