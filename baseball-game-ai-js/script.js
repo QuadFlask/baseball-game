@@ -12,34 +12,32 @@
 
 		$scope.userInput = function(){
 			if($scope.gameStatus == 'ready'){
-				$scope.userNumber = new Numbers(('' + $scope.userNumberValue).substring(0,3));
+				$scope.userNumber = new Numbers(zeroPadding($scope.userNumberValue, 3));
 				$scope.gameStatus = 'started';
 				ai = new Ai();
 				checker = new Checker();
 				userHistory.html("");
 				$scope.userNumberValue = "";
 			} else if($scope.gameStatus == 'started'){
-				if(validNumber($scope.userNumberValue)){
-					var userGuess = new Numbers('' + $scope.userNumberValue);
-					$scope.userNumberValue = "";
-					checkResult = checker.check(ai.aiNumbers, userGuess);
-					if(checkResult.isSame) {
-						$scope.gameStatus = 'over';
-						alert("you win!");
-						return;
-					}
-					userHistory.append(historyHtml(userGuess, checkResult));
-
-					var aiGuessNumbers = ai.getNextGuess();
-					checkResult = checker.check(aiGuessNumbers, $scope.userNumber);
-					if (checkResult.isSame) {
-						$scope.gameStatus = 'over';
-						alert("ai win! ai was: " + ai.aiNumbers.at(0) + ai.aiNumbers.at(1) + ai.aiNumbers.at(2));
-						return;
-					}
-					aiHistory.append(historyHtml(aiGuessNumbers, checkResult));
-					ai.guessResultIn(aiGuessNumbers, checkResult);
+				var userGuess = new Numbers('' + zeroPadding($scope.userNumberValue, 3));
+				$scope.userNumberValue = "";
+				checkResult = checker.check(ai.aiNumbers, userGuess);
+				if(checkResult.isSame) {
+					$scope.gameStatus = 'over';
+					alert("you win!");
+					return;
 				}
+				userHistory.append(historyHtml(userGuess, checkResult));
+
+				var aiGuessNumbers = ai.getNextGuess();
+				checkResult = checker.check(aiGuessNumbers, $scope.userNumber);
+				if (checkResult.isSame) {
+					$scope.gameStatus = 'over';
+					alert("ai win! ai was: " + ai.aiNumbers.at(0) + ai.aiNumbers.at(1) + ai.aiNumbers.at(2));
+					return;
+				}
+				aiHistory.append(historyHtml(aiGuessNumbers, checkResult));
+				ai.guessResultIn(aiGuessNumbers, checkResult);
 			} else if($scope.gameStatus == 'over'){
 				userHistory.html("");
 				aiHistory.html("");
@@ -49,10 +47,13 @@
 		};
 	};
 
-	function validNumber(n){
-		if((""+n).length<=1) return false;
-		
-		return true;
+	function zeroPadding(n, size){
+		var result = ""+n;
+		if(result.length > size) return result.substring(0, size);
+		size -= result.length;
+		for(var i=0;i<size; i++)
+			result = "0" + result;
+		return result;
 	}
 
 	function historyHtml(numbers, checkResult){
