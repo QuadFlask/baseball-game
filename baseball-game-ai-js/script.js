@@ -60,17 +60,18 @@
 				.controller('BaseballGameController', BaseballGameController)
 				.directive('historyList', function(){
 					return {
-						restrict: 'A',
-						scope: {
-							historyList: '=gameHistory'
-						},
-						template: '<p>'
-								+ '<p class="rbtn pure-button">{{historyList.numbers.at(0)}}</p>'
-								+ '<p class="rbtn pure-button">{{historyList.numbers.at(1)}}</p>'
-								+ '<p class="rbtn pure-button">{{historyList.numbers.at(2)}}</p>'
+						restrict: 'A'
+						,scope: {
+							gameHistory: '=gameHistory'
+						}
+						,template: '<p>'
+								+ '<p class="rbtn pure-button">{{gameHistory.numbers.at(0)}}</p>'
+								+ '<p class="rbtn pure-button">{{gameHistory.numbers.at(1)}}</p>'
+								+ '<p class="rbtn pure-button">{{gameHistory.numbers.at(2)}}</p>'
 								+ ' -> ' 
-								+ '<p class="rbtn pure-button">{{historyList.checkResult.strikeCount}}S  {{historyList.checkResult.ballCount}}B</p>'
+								+ '<p class="rbtn pure-button">{{gameHistory.checkResult.strikeCount}}S  {{gameHistory.checkResult.ballCount}}B</p>'
 								+ '</p>'
+						// ,templateUrl: 'history_template.html'
 					};
 				});
 })();
