@@ -19,13 +19,11 @@
 			<center>
 			<div class="pure-u-1-3">
 				<h3>YOU</h3>
-				<p id="userHistory">
-				</p>
+				<p history-list data-ng-repeat="gameHistory in userHistoryList" game-history="gameHistory"></p>
 			</div>
 			<div class="pure-u-1-3">
 				<h3>AI</h3>
-				<p id="aiHistory">
-				</p>
+				<p history-list data-ng-repeat="gameHistory in aiHistoryList" game-history="gameHistory"></p>
 			</div>
 			</center>
 			<center>

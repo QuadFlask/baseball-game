@@ -4,11 +4,11 @@
 		$scope.userNumber;
 		$scope.userNumberValue;
 		$scope.aiNumber;
+		$scope.userHistoryList = [];
+		$scope.aiHistoryList = [];
 		var ai;
 		var checker;
 		var checkResult;
-		var userHistory = $('#userHistory');
-		var aiHistory = $('#aiHistory');
 
 		$scope.userInput = function(){
 			if($scope.gameStatus == 'ready'){
@@ -16,7 +16,8 @@
 				$scope.gameStatus = 'started';
 				ai = new Ai();
 				checker = new Checker();
-				userHistory.html("");
+				$scope.userHistoryList = [];
+				$scope.aiHistoryList = [];
 				$scope.userNumberValue = "";
 			} else if($scope.gameStatus == 'started'){
 				var userGuess = new Numbers('' + zeroPadding($scope.userNumberValue, 3));
@@ -27,7 +28,7 @@
 					alert("you win!");
 					return;
 				}
-				userHistory.append(historyHtml(userGuess, checkResult));
+				$scope.userHistoryList.push({numbers:userGuess, checkResult:checkResult});
 
 				var aiGuessNumbers = ai.getNextGuess();
 				checkResult = checker.check(aiGuessNumbers, $scope.userNumber);
@@ -36,11 +37,9 @@
 					alert("ai win! ai was: " + ai.aiNumbers.at(0) + ai.aiNumbers.at(1) + ai.aiNumbers.at(2));
 					return;
 				}
-				aiHistory.append(historyHtml(aiGuessNumbers, checkResult));
+				$scope.aiHistoryList.push({numbers:aiGuessNumbers, checkResult:checkResult});
 				ai.guessResultIn(aiGuessNumbers, checkResult);
 			} else if($scope.gameStatus == 'over'){
-				userHistory.html("");
-				aiHistory.html("");
 				$scope.gameStatus = 'ready';
 				$scope.userNumber = undefined;
 			}
@@ -56,16 +55,22 @@
 		return result;
 	}
 
-	function historyHtml(numbers, checkResult){
-		return '<p>'
-			+ '<p class="rbtn pure-button">' + numbers.at(0) + '</p>'
-			+ '<p class="rbtn pure-button">' + numbers.at(1) + '</p>'
-			+ '<p class="rbtn pure-button">' + numbers.at(2) + '</p>'
-			+ ' -> ' 
-			+ '<p class="rbtn pure-button">' + checkResult.strikeCount + 'S ' + checkResult.ballCount + 'B</p>'
-			+ '</p>';
-	}
 	var app = angular
 				.module('flask', [])
-				.controller('BaseballGameController', BaseballGameController);
+				.controller('BaseballGameController', BaseballGameController)
+				.directive('historyList', function(){
+					return {
+						restrict: 'A',
+						scope: {
+							historyList: '=gameHistory'
+						},
+						template: '<p>'
+								+ '<p class="rbtn pure-button">{{historyList.numbers.at(0)}}</p>'
+								+ '<p class="rbtn pure-button">{{historyList.numbers.at(1)}}</p>'
+								+ '<p class="rbtn pure-button">{{historyList.numbers.at(2)}}</p>'
+								+ ' -> ' 
+								+ '<p class="rbtn pure-button">{{historyList.checkResult.strikeCount}}S  {{historyList.checkResult.ballCount}}B</p>'
+								+ '</p>'
+					};
+				});
 })();
