@@ -1,4 +1,4 @@
-baseball-game-ai
+baseball-game
 ================
 
 Simple guessing 3 number game
